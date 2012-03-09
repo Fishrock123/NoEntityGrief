@@ -1,4 +1,4 @@
-package Fishrock123.NoEntityGrief;
+package com.fishrock123.noentitygrief;
 import java.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
@@ -30,6 +30,6 @@ public class NoEntityGrief extends JavaPlugin implements Listener {
 		if (EWs == null || !EWs.containsKey(Creeper.class) || !EWs.get(Creeper.class).contains(e.getLocation().getWorld().getName())) e.blockList().clear();
 	}
 	@EventHandler public void onEntityForm(EntityBlockFormEvent e) {
-		e.setCancelled(e.getEntity() instanceof Snowman && (EWs == null || !EWs.containsKey(Snowman.class) || !EWs.get(Snowman.class).contains(e.getBlock().getLocation().getWorld().getName())) ? true : e.isCancelled());
+		e.setCancelled(EWs == null || !EWs.containsKey(Snowman.class) || !EWs.get(Snowman.class).contains(e.getBlock().getLocation().getWorld().getName()) ? true : e.isCancelled());
 	}
 }
