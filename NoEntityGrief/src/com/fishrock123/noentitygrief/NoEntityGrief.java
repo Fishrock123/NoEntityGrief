@@ -7,7 +7,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.plugin.java.JavaPlugin;
 public class NoEntityGrief extends JavaPlugin implements Listener {
 	private HashMap<Class<? extends Entity>, List<String>> EWs = new HashMap<Class<? extends Entity>, List<String>>();
-	public void onEnable() {
+	@Override public void onEnable() {
 		if (getConfig().options().header() == null) {
 			getConfig().options().copyHeader();
 			getConfig().options().copyDefaults(true);
@@ -15,7 +15,8 @@ public class NoEntityGrief extends JavaPlugin implements Listener {
 		}
 		EWs.put(Enderman.class, getConfig().getStringList("Endermen"));
 		EWs.put(Sheep.class, getConfig().getStringList("Sheep"));
-		EWs.put(Creeper.class, getConfig().getStringList("Explosion"));
+		EWs.put(Creeper.class, getConfig().getStringList("MobExplosion"));
+		EWs.put(TNTPrimed.class, getConfig().getStringList("TNT"));
 		EWs.put(Snowman.class, getConfig().getStringList("Snowman"));
 		getServer().getPluginManager().registerEvents(this, this);
 	}
@@ -27,7 +28,8 @@ public class NoEntityGrief extends JavaPlugin implements Listener {
 		}
 	}
 	@EventHandler public void onExplosion(EntityExplodeEvent e) {
-		if (EWs == null || !EWs.containsKey(Creeper.class) || !EWs.get(Creeper.class).contains(e.getLocation().getWorld().getName())) e.blockList().clear();
+		if (e.getEntity() instanceof TNTPrimed && (EWs == null || !EWs.containsKey(TNTPrimed.class) || !EWs.get(TNTPrimed.class).contains(e.getLocation().getWorld().getName()))) e.blockList().clear();
+		if (!(e.getEntity() instanceof TNTPrimed) && (EWs == null || !EWs.containsKey(Creeper.class) || !EWs.get(Creeper.class).contains(e.getLocation().getWorld().getName()))) e.blockList().clear();
 	}
 	@EventHandler public void onEntityForm(EntityBlockFormEvent e) {
 		if (EWs == null || !EWs.containsKey(Snowman.class) || !EWs.get(Snowman.class).contains(e.getBlock().getLocation().getWorld().getName())) e.setCancelled(true);

@@ -5,7 +5,9 @@ Endermen:
 - exempted_worldname
 Sheep:
 - exempted_worldname
-Explosion:
+MobExplosion:
+- exempted_worldname
+TNT:
 - exempted_worldname
 Snowman:
 - exempted_worldname
