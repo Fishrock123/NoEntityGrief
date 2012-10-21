@@ -5,7 +5,7 @@ import org.bukkit.event.*;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.plugin.java.JavaPlugin;
-public class NoEntityGrief extends JavaPlugin implements Listener {
+public class NoEntityGrief extends JavaPlugin implements Listener { // Licensed under GPLv3
 	private HashMap<Class<? extends Entity>, List<String>> EWs = new HashMap<Class<? extends Entity>, List<String>>();
 	@Override public void onEnable() {
 		if (getConfig().options().header() == null) {
@@ -23,15 +23,16 @@ public class NoEntityGrief extends JavaPlugin implements Listener {
 	}
 	@EventHandler public void onBlockChange(EntityChangeBlockEvent e) {
 		if (e.getEntity() instanceof Enderman && (EWs == null || !EWs.containsKey(Enderman.class) || !EWs.get(Enderman.class).contains(e.getBlock().getLocation().getWorld().getName()))) e.setCancelled(true);
-		if (e.getEntity() instanceof Silverfish && (EWs == null || !EWs.containsKey(Silverfish.class) || !EWs.get(Silverfish.class).contains(e.getBlock().getLocation().getWorld().getName()))) e.setCancelled(true);
-		if (e.getEntity() instanceof Sheep && (EWs == null || !EWs.containsKey(Sheep.class) || !EWs.get(Sheep.class).contains(e.getBlock().getLocation().getWorld().getName()))) {
+		else if (e.getEntity() instanceof Silverfish && (EWs == null || !EWs.containsKey(Silverfish.class) || !EWs.get(Silverfish.class).contains(e.getBlock().getLocation().getWorld().getName()))) e.setCancelled(true);
+		else if (e.getEntity() instanceof Sheep && (EWs == null || !EWs.containsKey(Sheep.class) || !EWs.get(Sheep.class).contains(e.getBlock().getLocation().getWorld().getName()))) {
 			e.setCancelled(true);
 			((Sheep)e.getEntity()).setSheared(false);
 		}
 	}
 	@EventHandler public void onExplosion(EntityExplodeEvent e) {
-		if (e.getEntity() instanceof TNTPrimed && (EWs == null || !EWs.containsKey(TNTPrimed.class) || !EWs.get(TNTPrimed.class).contains(e.getLocation().getWorld().getName()))) e.blockList().clear();
-		else if (EWs == null || !EWs.containsKey(Creeper.class) || !EWs.get(Creeper.class).contains(e.getLocation().getWorld().getName())) e.blockList().clear();
+		if (e.getEntity() instanceof TNTPrimed) { 
+			if (EWs == null || !EWs.containsKey(TNTPrimed.class) || !EWs.get(TNTPrimed.class).contains(e.getLocation().getWorld().getName())) e.blockList().clear();
+		} else if (EWs == null || !EWs.containsKey(Creeper.class) || !EWs.get(Creeper.class).contains(e.getLocation().getWorld().getName())) e.blockList().clear();
 	}
 	@EventHandler public void onEntityForm(EntityBlockFormEvent e) {
 		if (EWs == null || !EWs.containsKey(Snowman.class) || !EWs.get(Snowman.class).contains(e.getBlock().getLocation().getWorld().getName())) e.setCancelled(true);
