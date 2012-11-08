@@ -1,15 +1,13 @@
-# ExemptedWorlds
-##################
-
+# Worlds that are NOT protected
 Endermen:
-- exempted_worldname
+- unprotectedworld
 Sheep:
-- exempted_worldname
+- unprotectedworld
 MobExplosion:
-- exempted_worldname
+- unprotectedworld
 TNT:
-- exempted_worldname
+- unprotectedworld
 Snowman:
-- exempted_worldname
+- unprotectedworld
 Silverfish:
-- exempted_worldname
+- unprotectedworld
